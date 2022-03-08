@@ -21,10 +21,10 @@ class HomePage extends Component {
    
     componentDidMount(){
       
-        const api = "https://stockarea-task.herokuapp.com/details";
+        const api = "https://stockarea-task.herokuapp.com/api";
         let {sortedWarehouses, users} = this.state;
     
-        fetch(api).then(res => res.json()).then(data => this.setState({
+        fetch(`${api}/details`).then(res => res.json()).then(data => this.setState({
          
           users : data,
           sortedWarehouses: data,
