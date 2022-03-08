@@ -20,10 +20,10 @@ class HomePage extends Component {
     }
    
     componentDidMount(){
-   
+        const api = "http://localhost:4000/details";
         let {sortedWarehouses, users} = this.state;
     
-        fetch(`${process.env.REACT_APP_API}`).then(res => res.json()).then(data => this.setState({
+        fetch(api).then(res => res.json()).then(data => this.setState({
          
           users : data,
           sortedWarehouses: data,
