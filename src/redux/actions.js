@@ -11,7 +11,8 @@ const userUpdated =()=>({
  
 })
 const api = "http://localhost:4000/details";
-
+const devEnv = process.env.NODE_ENV !== "production";
+const {REACT_APP_DEV_URL, REACT_APP_PROD_URL} = process.env;
 
 export const getSingleUser= (id)=>{
     return function (dispatch){
