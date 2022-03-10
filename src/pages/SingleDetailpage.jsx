@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -56,25 +55,6 @@ const SingleDetailpage = () => {
     let dispach = useDispatch();
     let { id } = useParams();
     let history = useHistory();
-    const { user } = useSelector(state => state.users);
-    useEffect(() => {
-        dispach(getSingleUser(id));
-    }, [])
-    useEffect(() => {
-      
-    
-      if(user){
-          setInputs({...user});
-      }
-    }, [user])
-    
-    const { id: ids, name: warehouseName,
-        cluster: warehouseCluster,
-        space_available: warehouseSpace,
-        city: warehouseCity , is_live: is_warehouse_live} = user;
-
-   
-      
     const [inputs, setInputs] = useState({
         cluster: "",
         name: "",
@@ -82,6 +62,20 @@ const SingleDetailpage = () => {
         space_available: "",
         is_live: "",
     })
+    const { user } = useSelector(state => state.users);
+    useEffect(() => {
+        dispach(getSingleUser(id));
+    }, [inputs])
+    
+    
+    const { id: ids, name: warehouseName,
+        cluster: warehouseCluster,
+        space_available: warehouseSpace,
+        city: warehouseCity , is_live: is_warehouse_live} = user;
+
+   
+    
+   
     const [error ,setError] = useState('');
     const { cluster, name, city, space_available, is_live } = inputs;
     
@@ -104,14 +98,17 @@ const SingleDetailpage = () => {
         }
         else{
             dispach(upadateUser(inputs, id))
-            history.push('/');
+            setTimeout(() => {
+                history.push('/');     
+            }, 500);
+           
             setError("");
         }
     }
     return (
         <>
             <TableContainer component={Paper} style={{
-                margin: "10rem auto",
+                margin: "5rem auto",
                 width: '90%',
 
             }}>
@@ -122,6 +119,7 @@ const SingleDetailpage = () => {
                             <StyledTableCell align="center">Warehouse Name</StyledTableCell>
                             <StyledTableCell align="center">City</StyledTableCell>
                             <StyledTableCell align="center">Space Available</StyledTableCell>
+                            <StyledTableCell align="center">is_live</StyledTableCell>
                             <StyledTableCell align="center">Edit</StyledTableCell>
                         </TableRow>
                     </TableHead>
@@ -133,6 +131,7 @@ const SingleDetailpage = () => {
                             <StyledTableCell align="center">{warehouseName}</StyledTableCell>
                             <StyledTableCell align="center">{warehouseCity}</StyledTableCell>
                             <StyledTableCell align="center">{warehouseSpace}</StyledTableCell>
+                            <StyledTableCell align="center">{is_warehouse_live}</StyledTableCell>
                            <StyledTableCell align="center">
                                 <ButtonGroup variant="outlined" aria-label="outlined button group">
                                      <Button onClick={editItem}>Edit</Button>
@@ -153,7 +152,7 @@ const SingleDetailpage = () => {
                 <Box
                     component="form"
                     sx={{
-                        '& > :not(style)': { m: 1, width: '45ch' },
+                        '& > :not(style)': { width: '45ch' },
                     }}
                     noValidate
                     autoComplete="off"
@@ -168,6 +167,8 @@ const SingleDetailpage = () => {
                         <TextField id="standard-basic" label="Standard" variant="standard"
                             name='space_available' value={space_available || "" } type='number' 
                             onChange={handleInputChange} /> <br />
+                            <TextField id="standard-basic" label="Standard" variant="standard"
+                            name='is_live' value={is_live || ""} type='text' onChange={handleInputChange} /> <br />
                         <ButtonGroup variant="outlined" aria-label="outlined button group">
                             <Button type='submit' onClick={handleSubmit}>Submit</Button>
 

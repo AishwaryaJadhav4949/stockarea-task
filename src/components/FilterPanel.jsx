@@ -14,7 +14,9 @@ const getUnique = (items, value) => {
 const FilterPanel = ({ users, sortedWarehouses, city, handleChange, setSearchTerm, 
   searchTerm, cluster, space_available, minSize, maxSize }) => {
   
-
+  
+    const { users :warehouses} = useSelector(state => state.users);
+    console.log(warehouses)
 
   let cities = getUnique(users, "city");
   cities = ['all', ...cities]
